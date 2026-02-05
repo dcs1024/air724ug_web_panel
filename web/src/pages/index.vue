@@ -111,17 +111,36 @@ onMounted(() => {
 .device-list {
   display: flex;
   flex-direction: column;
+  /* 保持原有逻辑，但增加 fallback 和优化 */
   height: calc(100vh - var(--van-nav-bar-height) - var(--van-tabbar-height) - 32px);
+  
+  /* --- 新增功能：修复 Air724 底部遮挡与滚动 --- */
+  position: fixed !important;
+  top: 74px !important; /* 对应 nav-bar 预留空间 */
+  left: 0;
+  right: 0;
+  /* 核心修复：通过 bottom 强制避开底部导航栏，100px 确保安全距离 */
+  bottom: 80px !important; 
+  height: auto !important; 
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 16px !important;
+  box-sizing: border-box !important;
+  /* -------------------------------------- */
 }
 
 .van-pull-refresh {
   flex: 1;
+  /* 确保刷新容器能够撑满父级，解决无法滚到底部的问题 */
+  min-height: 100% !important;
 }
 
 .search-bar {
+  /* 保持原有逻辑 */
   margin: -16px;
   margin-bottom: 16px;
 }
+
 .van-cell {
   padding-top: 8px;
   padding-bottom: 8px;
